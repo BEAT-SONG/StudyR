@@ -81,9 +81,9 @@ barplot(table(is.na(df[3])))
 
 df
 is.na(df) 
-is.na(df[3])
+is.na(df[1])
 summary(is.na(df[3])) 
-table(is.na(df[1]))
+table(is.na(df[3])) # table을 통해서 T/F를 확인할 수 있다.
 plot(table(is.na(df)))
 barplot(table(is.na(df[1])), main ='연도') 
 barplot(table(is.na(df[2])), main ='월') 
@@ -106,7 +106,7 @@ df=read.csv("부산광역시_현대미술관 관람객 수_20201231.csv")
 df
 df[is.na(df)]=0 # NA값을 모두 0으로 지정한다.
 df
-summary(df)
+summary(df) 
 
 
 

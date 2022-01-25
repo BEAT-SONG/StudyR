@@ -51,6 +51,7 @@ mtcars # read 없는 자료는 내장자료이다.
 str(mtcars) # 구조를 확인해보자.
 head(mtcars,3) # 위에서 부터 보자. head(변수,숫자)
 summary(mtcars) # 중앙값과 평균이 비슷한가를 확인을 많이함. plot()을 이용.
+mtcars$vs # '변수명'이라고 생각하면 될 듯.
 # 산점도
 plot(mtcars$vs) # 데이터가 0과 1사이에 있다. 명목형변수(factor). 그 중에서도 1이 더 많은 거 같다.
 plot(mtcars$mpg)
@@ -58,11 +59,12 @@ mtcars
 sum(mtcars$cyl)
 summary(mtcars$cyl)
 summary(factor(mtcars$cyl)) # factor=as.factor / 같은 거끼리 묶으렴.
+summary(as.factor(mtcars$cyl))
 
 # 3개가 같은 명령.
 names(summary(factor(mtcars$cyl))) # 위에 있는 제목을 불러오는 것. 다 확인하고 중복되는 것을 제거해서 출력하는 것.
 levels(factor(mtcars$cyl)) # 위랑 같은 명령.mtcars$cyl를 factor화 하고 levels 해라. 다 확인하고 중복되는 것을 제거해서 출력하는 것.
-unique(mtcars$cyl) # 위랑 같은 명령. 위에 있는 데이터부터 중복을 제거하면서 출력하는 것.
+unique(mtcars$cyl) # 위랑 같은 명령. 위에 있는 데이터부터 중복을 제거하면서 출력하는 것. 그래서 위의 2개의 명령어와 달리 위에 있는 것부터 차례로 나옴.
 
 # names. 값의 이름. 바꿀 수 있다.
 tmp=summary(factor(mtcars$cyl))
@@ -73,14 +75,17 @@ str(tmp)
 tmp[1]
 
 # split(자료, 기준)으로 작업을 하면 리스트화 됨.
+split(mtcars, mtcars$cyl) 
 tmp=split(mtcars, mtcars$cyl) 
 tmp
 str(tmp)
-tmp[[1]]
+tmp$4 # 오류. 안되면 다른 방식으로 확인해봐야함. 아래에서 확인
+tmp[[1]] # 변수명으로는 구별이 안되지만 인덱스로는 가능함.
 
 # 아래의 2개는 차이가 없다. 
 split(tmp[[1]], tmp[[1]]$am)
 split(tmp[[1]], tmp[[1]][9])
+
 
 
 

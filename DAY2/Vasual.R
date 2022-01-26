@@ -346,25 +346,30 @@ library(Amelia)
 missmap(df) 
 savePlot("무인카메라결측치", type="png")
 
+# 결측치 제거.
+df=na.omit(df)
+missmap(df)
 
+# 빈도수 집계.
+# 일반적으로 모든 데이터의 빈도수를 집계하는 것을 기본으로 한다.
+table(df[,2])
+data.frame(table(df[,2])) # 타이틀과 빈도수가 나온다.
+tableDF=data.frame(table(df[,2])) 
+names(tableDF)[1]='title'
+tableDF
+barplot(tableDF[,1],tableDF[,2]) # 에러. 데이터가 벡터나 매트릭스값이 아니기 때문에.
+plot(tableDF)
+tableDF$Freq/sum(tableDF$Freq)
+tableDF$pro=tableDF$Freq/sum(tableDF$Freq)*100
+tableDF
 
+str(df)
+names(df)
 
+tmp=split(df$도로노선방향, df$시도명)
+head(split(df$도로노선방향, df$시도명))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# 데이터 관리하는 패키지. dply,
 
 
 

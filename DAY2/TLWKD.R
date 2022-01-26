@@ -164,7 +164,7 @@ subset(df1,시도명=='경기도')
 table(df$시도명)
 
 # ------------------------------------------------------
-# 5. 자료셋을 새로 제작해서 csv로 저장하기
+# 5. 자료셋을 새로 제작해서 csv(파일)로 저장하기
 # ------------------------------------------------------
 unique(df$시도명)
 str(df1)
@@ -222,13 +222,129 @@ select='경기도'
 tmp=subset(df1, 시도명==select)
 
 # ------------------------------------------------------
-# 
+# 폴더 생성 및 파일 생성.
+# ------------------------------------------------------
+#폴더명제작
+tmp=names(df1)
+index=1
+findCol=tmp[index]
+폴더명=paste('./저장/',findCol,'/',sep='') '/'=>저장을 위해 슬래쉬 들어가는게 좋음
+dir.create(폴더명) # 폴더 생성(저장)
+--------------------------------------------------------------------
+dataList=unique(df1[,index])
+for (index2 in 1:length(dataList)){
+      tmp=subset(df1,df1[,index]=='index2')
+      fileName = paste(폴더명,tmp,'.csv',sep='')
+      write.csv(tmp.fileName) # 파일 생성(저장)
+# ------------------------------------------------------
+# R 메모리 변수 모두 제거.
+# rm(list = ls())
+# ------------------------------------------------------
+ls()
+ls()[1]
+rm(ls()[1])
+rm(list=ls())
+
+df
+dir()
+fileName="전국무인교통단속카메라표준데이터.csv"
+df=read.csv(fileName)
+df
+아래의 쿼리. 
+# 모든 데이터를 Factor로 바꿈. 아래의 쿼리. stringsAsFactors =TRUE
+df=read.csv(fileName, stringsAsFactors =TRUE)
+head(df)
+str(df)
+
+# ------------------------------------------------------
+# 데이터로드후 재작업해서 다시 로드.
+# ------------------------------------------------------
+df=read.csv(fileName, stringsAsFactors =TRUE)
+df1=df[,c(1:9)]
+head(df1)
+str(df1)
+summary(df1)
+
+# df1 자료를 작업자료라고 저장
+write.csv(df1, '작업자료.csv')
+dir()
+
+# 메모리 변수 모두 제거. df로 작업자료.csv 부르기
+ls()
+list=ls()
+rm(list=ls())
+
+df=read.csv('작업자료.csv')
+df=read.csv('작업자료.csv', stringsAsFactors =TRUE)
+df=df[,-1] # 원하는 것만 추려서 로드할때 앞에 추가로 저장되는 것을 없애기 위함.
+head(df)
+str(df)
+
+# ------------------------------------------------------
+# 기술통계.
+# ------------------------------------------------------
+names(df)[1]
+summary(df[,1]) # 결과가 위는 제목, 아래는 집계 빈도수이다.
+
+names(df)[2] 
+str(names(df)[2])
+class(names(df)[2])
+summary(df[,2])
 
 
+data.frame(summary(df[,7]))
+data.frame(빈도수= summary(df[,7])) # 숫자 데이터는 데이터프레임으로 볼 수 없다.
+
+# ------------------------------------------------------
+# 기술통계.
+# NA값 지우기.
+# summary()
+# ------------------------------------------------------
+# NA값 확인
+summary(df)
+sum(is.na(df[,1]))
+sum(is.na(df[,2]))
+sum(is.na(df))
+
+colNames=names(df)
+colNames
+cnt=length(colNames)
+for (i in 1:cnt){
+print(colNames[i])
+print(sum(is.na(df[,i])))
+}
+
+### NA값 지우기
+sum(is.na(df))
+colName=names(df)
+cnt=length(colName)
+for(i in 1:cnt){
+    print(colName[i])
+    print(sum(is.na(df[,i])))
+}
+
+# ------------------------------------------------------
+# 결측치 패키지.
+# 아래는 시각화하기 위한 패키지.
+# 우선 3가지.
+# R을 실행할때에는 한번만 종료한 뒤에 다시 설치해주어야함.
+install.packages('naniar')
+library(naniar) #naniar 패키지를 불러옵니다.
+naniar::miss_case_summary(df) # case : 행 기준
+naniar::miss_var_summary(df) # variable : 변수 기준
+naniar::vis_miss(df) # 결측치 시각화. 이걸로 보고서를 작성함.
+naniar::gg_miss_upset(df) # 에러.
 
 
+install.packages('VIM')
+library(VIM); 
+VIM::aggr(df)
 
-
+# 기본으로 사용하는 시각화 패키지.
+install.packages('Amelia')
+library(Amelia)
+missmap(df) 
+savePlot("무인카메라결측치", type="png")
 
 
 
